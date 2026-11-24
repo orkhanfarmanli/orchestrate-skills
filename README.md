@@ -1,12 +1,41 @@
-# orchestrate-skills
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/mark-dark.svg">
+    <img src="assets/mark-light.svg" alt="" width="96" height="96">
+  </picture>
+</p>
 
-Three Claude Code skills that take a directory of tickets to reviewed commits, then walk you through whatever still needs a human decision.
+<h1 align="center">orchestrate-skills</h1>
+
+<p align="center">
+  Three Claude Code skills that take a directory of tickets to reviewed commits.<br>
+  Then they walk you through whatever still needs a human decision.
+</p>
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/flow-dark.svg">
+    <img src="assets/flow-light.svg" width="456" alt="The flow in five steps. /to-spec writes spec.md and /to-tickets writes issues/NN-slug.md, both from Matt Pocock's skills. /orchestrate implements, reviews and writes flags.md. /flagman has you decide each flag and writes fixes.md. /fixer implements the agreed fixes, uncommitted.">
+  </picture>
+</p>
+
+## Skills
 
 | Skill | Invoked as | What it does |
 | --- | --- | --- |
 | [orchestrate](skills/orchestrate/SKILL.md) | `/orchestrate <issues-dir> [model] [--parallel[=N]]` | Runs one fresh subagent per ticket on the current branch, reviews the whole run, runs fix rounds, and writes what needs you to `flags.md`. Never pushes or opens a PR. |
 | [flagman](skills/flagman/SKILL.md) | `/flagman <path/to/flags.md>` | Walks `flags.md` one entry per turn. You answer fix or ignore, and agreed fixes are copied to `fixes.md`. |
 | [fixer](skills/fixer/SKILL.md) | `/fixer <path/to/fixes.md> [model]` | Implements the agreed fixes in `fixes.md` with fresh subagents. Commits nothing. |
+
+## Usage
+
+```text
+/orchestrate .scratch/<feature-slug>/issues
+/flagman .scratch/<feature-slug>/flags.md
+/fixer .scratch/<feature-slug>/fixes.md
+```
+
+`/orchestrate` refuses to start on a dirty working tree, because ticket agents commit. `--parallel` runs up to N tickets at once in git worktrees and is described in [PARALLEL.md](skills/orchestrate/PARALLEL.md).
 
 ## Why these exist
 
@@ -23,7 +52,10 @@ Matt Pocock's skills produce the spec and the tickets, and his `implement` skill
 
 ### Matt Pocock's skills (required)
 
-This flow is built on top of [mattpocock/skills](https://github.com/mattpocock/skills) and does not run without them. `/orchestrate` reaches them in three ways, so all three have to be in place.
+> [!IMPORTANT]
+> This flow is built on top of [mattpocock/skills](https://github.com/mattpocock/skills) and does not run without them.
+
+`/orchestrate` reaches them in three ways, so all three have to be in place.
 
 1. The Claude Code plugin. Ticket agents call `mattpocock-skills:tdd` and `mattpocock-skills:code-review` by their plugin names.
 
@@ -62,15 +94,3 @@ Installed skills do not update themselves. Pull the latest with:
 ```bash
 npx skills@latest update orchestrate flagman fixer -g
 ```
-
-## Flow
-
-```text
-/to-spec                                      writes spec.md            (Matt Pocock)
-/to-tickets                                   writes issues/NN-slug.md  (Matt Pocock)
-/orchestrate .scratch/<feature-slug>/issues   implements, reviews, writes flags.md
-/flagman .scratch/<feature-slug>/flags.md     you decide each flag, writes fixes.md
-/fixer .scratch/<feature-slug>/fixes.md       implements the agreed fixes, uncommitted
-```
-
-`/orchestrate` refuses to start on a dirty working tree, because ticket agents commit. `--parallel` runs up to N tickets at once in git worktrees and is described in [PARALLEL.md](skills/orchestrate/PARALLEL.md).

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 456 366" width="456" height="366" role="img" aria-label="Flow from /to-spec to /fixer">
+  <line x1="36" y1="51" x2="36" y2="87" stroke="#59636e" stroke-width="2" stroke-linecap="round"/>
+  <line x1="36" y1="113" x2="36" y2="149" stroke="#59636e" stroke-width="2" stroke-linecap="round"/>
+  <line x1="36" y1="175" x2="36" y2="211" stroke="#1f2328" stroke-width="4" stroke-linecap="round"/>
+  <line x1="36" y1="237" x2="36" y2="273" stroke="#1f2328" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="36" cy="38" r="6" fill="none" stroke="#59636e" stroke-width="2"/>
+  <text x="64" y="36" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="16" font-weight="600" fill="#1f2328">/to-spec</text>
+  <text x="64" y="56" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif" font-size="14" fill="#59636e">writes spec.md</text>
+  <circle cx="36" cy="100" r="6" fill="none" stroke="#59636e" stroke-width="2"/>
+  <text x="64" y="98" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="16" font-weight="600" fill="#1f2328">/to-tickets</text>
+  <text x="64" y="118" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif" font-size="14" fill="#59636e">writes issues/NN-slug.md</text>
+  <circle cx="36" cy="162" r="7" fill="#1f2328"/>
+  <text x="64" y="160" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="16" font-weight="600" fill="#1f2328">/orchestrate</text>
+  <text x="64" y="180" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif" font-size="14" fill="#59636e">implements, reviews, writes flags.md</text>
+  <circle cx="36" cy="224" r="7" fill="#e5531a"/>
+  <text x="64" y="222" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="16" font-weight="600" fill="#1f2328">/flagman</text>
+  <text x="64" y="242" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif" font-size="14" fill="#59636e">you decide each flag, writes fixes.md</text>
+  <circle cx="36" cy="286" r="7" fill="#1f2328"/>
+  <text x="64" y="284" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="16" font-weight="600" fill="#1f2328">/fixer</text>
+  <text x="64" y="304" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif" font-size="14" fill="#59636e">implements the agreed fixes, uncommitted</text>
+  <g font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif" font-size="13" fill="#59636e">
+    <circle cx="36" cy="343.5" r="6" fill="none" stroke="#59636e" stroke-width="2"/><text x="50" y="348">Matt Pocock's skills</text>
+    <circle cx="214" cy="343.5" r="7" fill="#1f2328"/><text x="228" y="348">these skills</text>
+    <circle cx="330" cy="343.5" r="7" fill="#e5531a"/><text x="344" y="348">your decisions</text>
+  </g>
+</svg>
