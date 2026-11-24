@@ -8,6 +8,17 @@ Three Claude Code skills that take a directory of tickets to reviewed commits, t
 | [flagman](skills/flagman/SKILL.md) | `/flagman <path/to/flags.md>` | Walks `flags.md` one entry per turn. You answer fix or ignore, and agreed fixes are copied to `fixes.md`. |
 | [fixer](skills/fixer/SKILL.md) | `/fixer <path/to/fixes.md> [model]` | Implements the agreed fixes in `fixes.md` with fresh subagents. Commits nothing. |
 
+## Why these exist
+
+Matt Pocock's skills produce the spec and the tickets, and his `implement` skill builds one piece of work from them. These three skills cover what was still done by hand around that.
+
+- **Running a whole ticket set.** `/orchestrate` works through every ticket in dependency order, with one fresh subagent per ticket, and verifies each one's commits before starting the next.
+- **A correctness review on top of the spec review.** Matt's `code-review` checks the work against the spec and the repo's standards. Code can pass that and still be wrong, so every ticket and the run as a whole also get Claude Code's built-in correctness review.
+- **A short list for the human.** Early runs put every review finding into `flags.md`. Fix rounds now settle the findings that have one obvious fix, so what remains is what needs your input.
+- **One decision per turn.** Going over `flags.md` by hand in a new session every time became `/flagman`, which gives a summary and a recommendation for each entry and asks fix or ignore.
+- **Deciding apart from fixing.** `/flagman` only evaluates and records what you agreed to. `/fixer` implements those fixes afterwards with fresh subagents.
+- **A history of the feature.** `flags.md` keeps every finding, marked `[fixed]`, `[refused]` or `[agreed]`, and a corrected spec or ticket line keeps its old text as `[was: ...]`.
+
 ## Prerequisites
 
 ### Matt Pocock's skills (required)
@@ -36,7 +47,6 @@ This flow is built on top of [mattpocock/skills](https://github.com/mattpocock/s
 
 ### Also required
 
-- The [superpowers](https://github.com/obra/superpowers) plugin. Fix-round agents call `superpowers:receiving-code-review`.
 - Claude Code's built-in `code-review` skill, which the correctness reviews call at `xhigh`.
 
 ## Install
@@ -46,6 +56,12 @@ npx skills@latest add orkhanfarmanli/orchestrate-skills -g
 ```
 
 Or copy the three directories under `skills/` into `~/.claude/skills/`.
+
+Installed skills do not update themselves. Pull the latest with:
+
+```bash
+npx skills@latest update orchestrate flagman fixer -g
+```
 
 ## Flow
 

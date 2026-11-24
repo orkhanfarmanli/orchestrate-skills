@@ -89,14 +89,14 @@ Fix the review findings below, left on the current branch by automated reviews o
 
 <the group's findings, each copied exactly, under its ticket heading>
 
-Call the Skill tool with skill `superpowers:receiving-code-review` and follow it, treating these findings as an external reviewer's. Nobody can answer questions mid-run, so where it says to ask or to stop and discuss, keep that finding for the user. An unclear finding holds back only itself, so go on fixing the rest.
+Each finding is a claim from an automated reviewer, so verify it before you act on it. Read the cited code with its callers, its tests and its `git log`, and work out why it is written the way it is and what a change would break. Nobody can answer questions mid-run, so a finding that leaves you with one is kept for the user.
 
 Sort every finding into the first of these that fits:
 - **Fix** when it holds at HEAD and has one obvious fix that follows from the spec, its ticket, or a written rule in AGENTS.md or CLAUDE.md, stays within a few files, and involves no product choice.
 - **Drop** when it no longer holds at HEAD, repeats another finding, or isn't worth a change. Not worth a change means cosmetic, a race on rare writes that loses no data, reachable only from a stale client, on a path nothing calls yet, or a departure from a convention that its sibling code shares.
 - **Keep** for the user in every other case, such as a product or spec decision, a fix with more than one sensible shape, a change that sprawls, anything you're unsure of, or a fix you tried and couldn't get working. Back out a failed attempt before moving on.
 
-Make each fix the smallest diff that resolves its finding, and give every behavior change a test that fails without the fix. Run the full test suite and the lint and type checks of every app you touched. Commit to the current branch. Do not create or switch branches, push, or open a PR.
+Take the Fix findings one at a time and run the tests that cover each before starting the next. Make each fix the smallest diff that resolves its finding, and give every behavior change a test that fails without the fix. Run the full test suite and the lint and type checks of every app you touched. Commit to the current branch. Do not create or switch branches, push, or open a PR.
 
 End your report with exactly these sections: `## Result` (done or failed, one line), `## Commits` (`git log --oneline` of your commits, or "none"), `## Verification` (commands run and their outcome), then `## Fixed`, `## Dropped` and `## Kept`. Those three list findings copied exactly, one per line, or "none". Give each Dropped finding a short reason, and each Kept finding what is unclear or what the user must decide, plus what you tried if a fix failed. Every finding above appears in exactly one of them.
 ```
