@@ -1,6 +1,6 @@
 ---
 name: orchestrate
-description: Use when the user wants a directory of tickets implemented end to end by one fresh subagent per ticket, invoked as /orchestrate <issues-dir>
+description: Use when the user wants a directory of tickets implemented end to end by one fresh subagent per ticket, invoked as /orchestrate [issues-dir]
 argument-hint: "[issues-dir] [model] [--parallel[=N]]"
 disable-model-invocation: true
 ---

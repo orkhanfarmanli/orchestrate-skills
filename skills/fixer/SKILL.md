@@ -1,6 +1,6 @@
 ---
 name: fixer
-description: Use when the user wants the agreed fixes in a fixes.md implemented by fresh subagents, invoked as /fixer <path to fixes.md> [model]
+description: Use when the user wants the agreed fixes in a fixes.md implemented by fresh subagents, invoked as /fixer [path/to/fixes.md] [model]
 argument-hint: "[path/to/fixes.md] [model]"
 disable-model-invocation: true
 ---

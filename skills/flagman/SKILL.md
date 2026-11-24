@@ -1,6 +1,6 @@
 ---
 name: flagman
-description: Use when the user wants to go over a flags.md one entry at a time and decide what gets fixed, invoked as /flagman <path to flags.md>
+description: Use when the user wants to go over a flags.md one entry at a time and decide what gets fixed, invoked as /flagman [path/to/flags.md]
 argument-hint: "[path/to/flags.md]"
 disable-model-invocation: true
 ---
