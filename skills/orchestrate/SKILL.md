@@ -15,7 +15,8 @@ Arguments: `$ARGUMENTS`. The first token is the issues directory. The second tok
 
 1. Resolve the issues directory to an absolute path and list it. Tickets are `NN-slug.md`. Read every ticket's `Status:` and `Blocked by:` lines.
 2. From the repository root run `git status --porcelain -- . ":(exclude)<feature dir>"`. If it prints anything, stop and report: ticket agents commit, and would sweep those changes in. Note the current branch; all work lands there. No new branches, no push, no PR. Record `git rev-parse HEAD` as the run's **start**.
-3. Create `flags.md` in the feature directory if missing, containing only a `# <feature directory name> flags` heading.
+3. In `~/.claude/plugins/installed_plugins.json`, take the `installPath` of the `mattpocock-skills@` entry and find `<installPath>/skills/*/implement/SKILL.md`. That file is the **implement path**. If there is no such entry or file, stop and report that the mattpocock-skills plugin is missing.
+4. Create `flags.md` in the feature directory if missing, containing only a `# <feature directory name> flags` heading.
 
 ## Loop
 
@@ -44,7 +45,7 @@ Fill every angle-bracket slot with absolute paths. Paste the Flag bar and Correc
 ```text
 Implement ticket <NN>: `<ticket path>`. The spec is `<spec path>`; read both before touching code.
 
-Follow the implement skill: run `cat ~/.agents/skills/implement/SKILL.md` and do what it says. The Skill tool refuses that skill and a `/implement` line does not expand inside a subagent, so read the file. Its `/tdd` and `/code-review` are `mattpocock-skills:tdd` and `mattpocock-skills:code-review`, invoked through the Skill tool. Where the repository's AGENTS.md or CLAUDE.md disagrees with the implement skill, the repository wins.
+Follow the implement skill: run `cat <implement path>` and do what it says. The Skill tool refuses that skill and a `/implement` line does not expand inside a subagent, so read the file. Its `/tdd` and `/code-review` are `mattpocock-skills:tdd` and `mattpocock-skills:code-review`, invoked through the Skill tool. Where the repository's AGENTS.md or CLAUDE.md disagrees with the implement skill, the repository wins.
 
 After that review and before committing, `git add -N` any new files so the diff shows them, then run a correctness review of your uncommitted diff with no target. <Correctness review paragraph>
 
@@ -61,6 +62,8 @@ Once the loop ends with no ticket failed and at least one ticket done this run, 
 
 ```text
 Commits `<start>..<end>` on the current branch implement tickets from `<issues dir>`. The spec is `<spec path>`.
+
+Before you fix a finding in either review below, read the ticket behind the code and its commit messages, and work out why the code is written that way. A fix that would reverse a choice a ticket made on purpose stays unfixed. Report it with the choice it would reverse.
 
 First review the run against the whole spec: call the Skill tool with skill `mattpocock-skills:code-review` and args `fixed point <start>, spec <spec path>`. Check each finding against the code and drop the ones that don't hold. Fix a requirement that a ticket covered but left partial or wrong. A requirement no ticket covered, scope creep, and every Standards finding stay unfixed. All of them go into the report's `## Review findings` section, one line each with its file:line or spec line, the fixed ones starting `[fixed]`. Commit those fixes before the next review.
 
@@ -92,7 +95,7 @@ Fix the review findings below, left on the current branch by automated reviews o
 Each finding is a claim from an automated reviewer, so verify it before you act on it. Read the cited code with its callers, its tests and its `git log`, and work out why it is written the way it is and what a change would break. Nobody can answer questions mid-run, so a finding that leaves you with one is kept for the user.
 
 Sort every finding into the first of these that fits:
-- **Fix** when it holds at HEAD and has one obvious fix that follows from the spec, its ticket, or a written rule in AGENTS.md or CLAUDE.md, stays within a few files, and involves no product choice.
+- **Fix** when it holds at HEAD and has one obvious fix that follows from the spec, its ticket, or a written rule in AGENTS.md or CLAUDE.md, stays within a few files, involves no product choice, and changes no database schema or public interface in a way the spec doesn't already call for.
 - **Drop** when it no longer holds at HEAD, repeats another finding, or isn't worth a change. Not worth a change means cosmetic, a race on rare writes that loses no data, reachable only from a stale client, on a path nothing calls yet, or a departure from a convention that its sibling code shares.
 - **Keep** for the user in every other case, such as a product or spec decision, a fix with more than one sensible shape, a change that sprawls, anything you're unsure of, or a fix you tried and couldn't get working. Back out a failed attempt before moving on.
 

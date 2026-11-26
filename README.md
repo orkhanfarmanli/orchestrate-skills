@@ -55,22 +55,15 @@ Matt Pocock's skills produce the spec and the tickets, and his `implement` skill
 > [!IMPORTANT]
 > This flow is built on top of [mattpocock/skills](https://github.com/mattpocock/skills) and does not run without them.
 
-`/orchestrate` reaches them in three ways, so all three have to be in place.
+`/orchestrate` reaches them in two ways, so both have to be in place.
 
-1. The Claude Code plugin. Ticket agents call `mattpocock-skills:tdd` and `mattpocock-skills:code-review` by their plugin names.
+1. The Claude Code plugin. Ticket agents call `mattpocock-skills:tdd` and `mattpocock-skills:code-review` by their plugin names. They read the `implement` skill's file from the plugin's install directory, because a subagent cannot expand `/implement`.
 
    ```bash
    claude plugin install mattpocock-skills@claude-plugins-official
    ```
 
-2. The `implement` skill as a file. Ticket agents read it from `~/.agents/skills/implement/SKILL.md`, because a subagent cannot expand `/implement`.
-
-   ```bash
-   npx skills@latest add mattpocock/skills -g -s implement
-   ls ~/.agents/skills/implement/SKILL.md
-   ```
-
-3. Tickets in his local-markdown layout. Run `/setup-matt-pocock-skills` once per repo and pick local files as the issue tracker, then produce the spec with `/to-spec` and the tickets with `/to-tickets`. That gives `/orchestrate` what it expects:
+2. Tickets in his local-markdown layout. Run `/setup-matt-pocock-skills` once per repo and pick local files as the issue tracker, then produce the spec with `/to-spec` and the tickets with `/to-tickets`. That gives `/orchestrate` what it expects:
 
    ```text
    .scratch/<feature-slug>/spec.md
